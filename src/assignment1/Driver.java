@@ -13,8 +13,12 @@ public class Driver
         for(String s : args) {
             try {
                 int number = parseInt(s);
-                System.out.println("Searching range [2:" + number + "]");
-                NumberClassifier.findPrimes(number);
+                if(number > 2) {
+                    System.out.println("Searching range [2:" + number + "]");
+                    NumberClassifier.findPrimes(number);
+                }
+                else
+                    System.out.println("Number must be larger than 2");
                 System.out.println();
             } catch (NumberFormatException e) {
                 // If the user passes an argument that is not an int.
