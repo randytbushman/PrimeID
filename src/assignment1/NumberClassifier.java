@@ -31,7 +31,6 @@ public class NumberClassifier
             else
                 factorMap.put(i, factors);
         }
-
         // System.out.println("Prime List:" + primeList);
         // System.out.println("Factor Map:" + factorMap);
     }
