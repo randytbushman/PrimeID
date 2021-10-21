@@ -10,6 +10,9 @@ import static java.lang.Integer.parseInt;
 public class Driver
 {
     public static void main(String[] args) {
+        FactorizerInterface f = new FactorizerInterface();
+
+        /*
         long startTime;
         for(String s : args) {
             try {
@@ -29,5 +32,7 @@ public class Driver
                 System.out.println();
             }
         }
+        */
+
     }
 }
