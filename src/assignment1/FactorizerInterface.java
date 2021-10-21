@@ -3,17 +3,22 @@ package assignment1;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+/**
+ * This class provides an interface for the user to select one of four methods of factorizing.
+ * @author Randolph Bushman
+ * @version 10.21.2021
+ */
 public class FactorizerInterface
 {
-    private Scanner sc;
-    private int lastSelectedFactorizeMode;
-    private boolean running;
+    private Scanner sc;                         // Processes the input from the user.
+    private int lastSelectedFactorizeMode;      // The factorizer mode the user last selected.
+    private boolean running;                    // The current running state of the interface.
 
     public FactorizerInterface() {
         sc = new Scanner(System.in);
         running = true;
         System.out.println("Welcome to Randy's Factorizer!");
-        int numThreads = 0;
+        int numThreads;
 
 
 
