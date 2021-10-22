@@ -22,7 +22,7 @@ public class NumberClassifier
         Map<Integer, List<Integer>> factorMap = new HashMap<>();    // Keys represent the number, values represent factors
         List<Integer> primeList = new ArrayList<>();
         List<Integer> factors;
-
+        /*
         for(int i = 2; i <= n; ++i) {
             factors = FactorFinder.findFactors(i);
 
@@ -31,6 +31,7 @@ public class NumberClassifier
             else
                 factorMap.put(i, factors);
         }
+        */
         // System.out.println("Prime List:" + primeList);
         // System.out.println("Factor Map:" + factorMap);
     }
