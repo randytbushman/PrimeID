@@ -1,8 +1,8 @@
-package singlethreadedfactorizer;
+package assignment1;
 
 import java.util.List;
 
-public class PrimeFinder
+public class SingleThreadedPrimeFinder
 {
     public static boolean isPrime(int n) {
         return false;

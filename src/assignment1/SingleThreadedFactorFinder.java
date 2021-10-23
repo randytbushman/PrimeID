@@ -1,4 +1,4 @@
-package singlethreadedfactorizer;
+package assignment1;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.HashMap;
@@ -10,11 +10,11 @@ import java.util.List;
  * @author Randolph Bushman
  * @version 10.22.2021
  */
-public class FactorFinder
+public class SingleThreadedFactorFinder
 {
     private Map<Integer, List<Integer>> factorMap;  // A map that whose key represents a number and whose value represents a list of the factors of the key
 
-    public FactorFinder() {
+    public SingleThreadedFactorFinder() {
         factorMap = new HashMap<>();
     }
 
