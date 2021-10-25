@@ -17,13 +17,15 @@ public class FactorFinder
      * @param n the int whose factors we find.
      * @return The List of factors of n.
      */
-    public static List<Integer> findFactors(int n) {
+    public static List<Integer> findFactors(int n, Map<Integer, List<Integer>> factorMap) {
         List<Integer> factorlist = new ArrayList<>();
         factorlist.add(1);
         for(int i = 2; i <= n/2; ++i)   // We iterate to n/2 because no larger int cannot divide n besides itself.
             if(n % i == 0)
                 factorlist.add(i);
+
         factorlist.add(n);
+        factorMap.put(n, factorlist);
         return factorlist;
     }
 

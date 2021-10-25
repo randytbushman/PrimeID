@@ -43,7 +43,7 @@ public class FactorizerInterface
                     switch (lastSelectedFactorizeMode) {
                         case 1: SingleThreadedFactorizer.factorize(numToFactorize); break;
 
-                        case 2: System.out.println(2); break;
+                        case 2: UnboundedTheadedFactorizer.factorize(numToFactorize); break;
 
                         case 3:
                             System.out.println("Please specify Threadpool size:");

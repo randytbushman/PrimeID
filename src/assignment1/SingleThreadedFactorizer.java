@@ -22,11 +22,11 @@ public class SingleThreadedFactorizer
         long startTime = System.nanoTime();
         List<Integer> primeList = new ArrayList<>();
         Map<Integer, List<Integer>> factorMap = new HashMap<>();
+
         for (int i = 2; i <= n; ++i)
-            if (PrimeFinder.isPrime(i))
-                primeList.add(i);
-            else
-                factorMap.put(i, FactorFinder.findFactors(i));
+            if (!PrimeFinder.isPrime(i, primeList))
+                FactorFinder.findFactors(i, factorMap);
+
         System.out.println("Finished in " + (System.nanoTime() - startTime) + "ns\n\n");
         System.out.println(primeList);
         System.out.println(factorMap+"\n\n");

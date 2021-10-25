@@ -13,9 +13,11 @@ public class PrimeFinder
      * @param n The number we are classifying.
      * @return true if n is prime and false if n is composite.
      */
-    public static boolean isPrime(int n) {
-        if(n == 2 || n == 3)
+    public static boolean isPrime(int n, List<Integer> primeList) {
+        if(n == 2 || n == 3) {
+            primeList.add(n);
             return true;
+        }
 
         if(n % 2 == 0 || n % 3 == 0)
             return false;
@@ -28,6 +30,7 @@ public class PrimeFinder
         // We can also check -> 6k-1 <= sqrt(n)
         // Only need to check up to sqrt(n) for primes
         // Here, two theorems are used
+        primeList.add(n);
         return true;
     }
 
