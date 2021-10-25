@@ -10,7 +10,7 @@ import java.util.List;
  * @author Randolph Bushman
  * @version 10.22.2021
  */
-public class SingleThreadedFactorFinder
+public class FactorFinder
 {
     /**
      * This method locates the factors of a given int n then stores the result in the factor map.

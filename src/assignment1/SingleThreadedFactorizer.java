@@ -10,7 +10,7 @@ import java.util.Map;
  * @author Randolph Bushman
  * @version 10.22.2021
  */
-public class SingleThreadedFactorizer implements Factorizer
+public class SingleThreadedFactorizer
 {
     /**
      * Given an int, n, this method locates the prime numbers between 2 and n. The numbers that are not prime
@@ -18,15 +18,17 @@ public class SingleThreadedFactorizer implements Factorizer
      * that number's factors. The time it takes to complete shall then be printed.
      * @param n calculate and store the prime numbers between 2 and n inclusively. n > 2
      */
-    public void factorize(int n) {
+    public static void factorize(int n) {
         long startTime = System.nanoTime();
         List<Integer> primeList = new ArrayList<>();
         Map<Integer, List<Integer>> factorMap = new HashMap<>();
         for (int i = 2; i <= n; ++i)
-            if (SingleThreadedPrimeFinder.isPrime(i))
+            if (PrimeFinder.isPrime(i))
                 primeList.add(i);
             else
-                factorMap.put(i, SingleThreadedFactorFinder.findFactors(i));
-        System.out.println("Finished in " + (System.nanoTime() - startTime) + "ns");
+                factorMap.put(i, FactorFinder.findFactors(i));
+        System.out.println("Finished in " + (System.nanoTime() - startTime) + "ns\n\n");
+        System.out.println(primeList);
+        System.out.println(factorMap+"\n\n");
     }
 }

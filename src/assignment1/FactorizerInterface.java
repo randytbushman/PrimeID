@@ -19,8 +19,7 @@ public class FactorizerInterface
         running = true;
         System.out.println("Welcome to Randy's Factorizer!");
         int numThreads;
-
-
+        int numToFactorize;
 
         while(running) {
             System.out.println("Please select a mode:\n" +
@@ -29,30 +28,43 @@ public class FactorizerInterface
                     "3) Bounded Threadpool using the Executor Framework\n" +
                     "4) Bounded Threadpool using a Callable rather than a Runnable\n" +
                     "5) Quit Factorizer");
+
             try {
                 lastSelectedFactorizeMode = sc.nextInt();
-                switch (lastSelectedFactorizeMode) {
-                    case 1: System.out.println(1); break;
-                    case 2: System.out.println(2); break;
-                    case 3:
-                        System.out.println("Please specify Threadpool size:");
-                        numThreads = sc.nextInt();
-                        if(numThreads > 0)
-                            System.out.println("Size of threadpool: " + numThreads);
-                        else
-                            System.err.println("Thread count must be positive!");
-                        break;
-                    case 4:
-                        System.out.print("Please specify Threadpool size: ");
-                        numThreads = sc.nextInt();
-                        if(numThreads > 0)
-                            System.err.println("Size of threadpool: " + numThreads);
-                        else
-                            System.err.println("Thread count must be positive!");
-                        break;
 
-                    case 5: System.out.println("Goodbye!"); running=false; break;
-                    default: System.err.println("Please pick a valid selection\n");
+                if(lastSelectedFactorizeMode == 5) {
+                    System.out.println("Goodbye!");
+                    running = false;
+                }
+                else {
+                    System.out.println("What number would you like to factorize?");
+                    numToFactorize = sc.nextInt();
+
+                    switch (lastSelectedFactorizeMode) {
+                        case 1: SingleThreadedFactorizer.factorize(numToFactorize); break;
+
+                        case 2: System.out.println(2); break;
+
+                        case 3:
+                            System.out.println("Please specify Threadpool size:");
+                            numThreads = sc.nextInt();
+                            if(numThreads > 0)
+                                System.out.println("Size of threadpool: " + numThreads);
+                            else
+                                System.err.println("Thread count must be positive!");
+                            break;
+
+                        case 4:
+                            System.out.print("Please specify Threadpool size: ");
+                            numThreads = sc.nextInt();
+                            if(numThreads > 0)
+                                System.err.println("Size of threadpool: " + numThreads);
+                            else
+                                System.err.println("Thread count must be positive!");
+                            break;
+
+                        default: System.err.println("Please pick a valid selection\n");
+                    }
                 }
             }
 
