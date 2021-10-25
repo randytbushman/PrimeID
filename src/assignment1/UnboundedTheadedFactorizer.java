@@ -6,6 +6,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+/**
+ * This class is responsible for classifying numbers as either prime or composite. The methods in this class are
+ * threaded. The number of threads created is unbounded.
+ * @author Randolph Bushman
+ * @version 10.22.2021
+ */
 public class UnboundedTheadedFactorizer {
 
     /**

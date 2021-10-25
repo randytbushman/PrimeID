@@ -6,7 +6,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * This class is responsible for classifying numbers as either prime or composite. The time it
+ * This class is responsible for classifying numbers as either prime or composite. The methods within this class
+ * are single threaded.
  * @author Randolph Bushman
  * @version 10.22.2021
  */
