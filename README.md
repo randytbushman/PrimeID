@@ -1,11 +1,14 @@
-# PrimeID
+# PrimeFactorizer
 Concurrent Programming class.
 
-This program takes in int command line arguments and finds all the prime numbers between 2 and that number. 
-This program also prints the factors of the composite (non-prime) numbers.
+The PrimeFactorizer is a tool used to calculate the primes in a given interval. All prime numbers shall be stored in a list, while all composite numbers shall be stored in a map.
 
-The main method is located in the Driver.java class. 
+This program comes equipped with 4 modes:
 
-Run the program in any IDE with one or many int arguments greater than 2:
+    1.) Single Threaded
+    2.) Multi Threaded (Unbounded)
+    3.) Multi Threaded (Bounded Threadpool)
+    4.) Multi Threaded (Bounded Threadpool Callable)
+    
+The computation time is returned as output each time the user selects a mode. To show correctness or to debug, the user enter the Factorizer classes and uncomment the print statements inside to show the contents of the collections.
 
-Error messages will output if the input is not properly formatted.
