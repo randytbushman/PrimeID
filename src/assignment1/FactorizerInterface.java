@@ -46,10 +46,13 @@ public class FactorizerInterface
                         case 2: UnboundedTheadedFactorizer.factorize(numToFactorize); break;
 
                         case 3:
-                            System.out.println("Please specify Threadpool size:");
+                            System.out.println("Specify Threadpool size (enter 0 for default settings): ");
                             numThreads = sc.nextInt();
-                            if(numThreads > 0)
-                                System.out.println("Size of threadpool: " + numThreads);
+
+                            if (numThreads == 0)
+                                ThreadedBoundedFactorizerRunnable.factorize(numToFactorize);
+                            else if(numThreads > 0)
+                                ThreadedBoundedFactorizerRunnable.factorize(numToFactorize, numThreads);
                             else
                                 System.err.println("Thread count must be positive!");
                             break;
