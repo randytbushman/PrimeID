@@ -3,7 +3,7 @@ package assignment1;
 import java.util.*;
 import java.util.concurrent.*;
 
-public class ThreadedBoundedFactorizerRunnable {
+public class BoundedThreadedFactorizerRunnable {
 
     public static void factorize(int n) {
         factorize(n, Runtime.getRuntime().availableProcessors() + 1);

@@ -50,9 +50,9 @@ public class FactorizerInterface
                             numThreads = sc.nextInt();
 
                             if (numThreads == 0)
-                                ThreadedBoundedFactorizerRunnable.factorize(numToFactorize);
+                                BoundedThreadedFactorizerRunnable.factorize(numToFactorize);
                             else if(numThreads > 0)
-                                ThreadedBoundedFactorizerRunnable.factorize(numToFactorize, numThreads);
+                                BoundedThreadedFactorizerRunnable.factorize(numToFactorize, numThreads);
                             else
                                 System.err.println("Thread count must be positive!");
                             break;
