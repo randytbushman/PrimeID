@@ -10,14 +10,12 @@ import java.util.Scanner;
  */
 public class FactorizerInterface
 {
-    private int lastSelectedFactorizeMode;      // The factorizer mode the user last selected.
-    private boolean running;                    // The current running state of the interface.
-
     public FactorizerInterface() {
         Scanner sc = new Scanner(System.in);
-        running = true;
+        boolean running = true;
         System.out.println("Welcome to Randy's Factorizer!");
         int numThreads;
+        int lastSelectedFactorizeMode;
         int numToFactorize;
 
         while(running) {
