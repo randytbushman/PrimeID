@@ -55,8 +55,8 @@ public class UnboundedTheadedFactorizer {
         try {
             for (Thread t : threadList)
                 t.join();
-        } catch (Exception e) {
-            System.out.println("I am lame");
+        } catch (InterruptedException e) {
+            System.err.println("InterruptException while joining on main thread.");
         }
 
         System.out.println("Finished in " + (System.nanoTime() - startTime) + "ns\n\n");

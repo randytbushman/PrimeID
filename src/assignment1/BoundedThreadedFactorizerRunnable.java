@@ -64,7 +64,7 @@ public class BoundedThreadedFactorizerRunnable {
         try {
             exec.awaitTermination(10, TimeUnit.MINUTES);
         } catch (InterruptedException e) {
-            System.err.println("I am lame");
+            System.err.println("InterruptedException while awaiting termination.");
         }
 
 
@@ -72,9 +72,4 @@ public class BoundedThreadedFactorizerRunnable {
         System.out.println(primeList);
         //System.out.println(factorMap+"\n\n");
     }
-
-
-
-
-
 }

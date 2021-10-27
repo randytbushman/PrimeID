@@ -69,16 +69,11 @@ public class BoundedThreadedFactorizerCallable {
         try {
             exec.awaitTermination(10, TimeUnit.MINUTES);
         } catch (InterruptedException e) {
-            System.err.println("I am lame");
+            System.err.println("InterruptedException while awaiting termination.");
         }
 
         System.out.println("Finished in " + (System.nanoTime() - startTime) + "ns\n\n");
         System.out.println(primeList);
         //System.out.println(factorMap+"\n\n");
     }
-
-
-
-
-
 }
