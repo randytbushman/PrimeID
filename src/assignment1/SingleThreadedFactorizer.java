@@ -28,9 +28,11 @@ public class SingleThreadedFactorizer
         if (n >= 3)
             primeList.add(3);
 
+        // All even number greater than 2 are composite
         for (int i = 4; i <= n; i+=2)
             FactorFinder.findFactors(i, factorMap);
 
+        // All odd numbers greater than 3 may be prime
         for (int i = 5; i <= n; i+=2)
             if (!PrimeFinder.isPrime(i, primeList))
                 FactorFinder.findFactors(i, factorMap);
