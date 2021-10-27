@@ -23,8 +23,15 @@ public class SingleThreadedFactorizer
         long startTime = System.nanoTime();
         List<Integer> primeList = new ArrayList<>();
         Map<Integer, List<Integer>> factorMap = new HashMap<>();
+        primeList.add(2);
 
-        for (int i = 2; i <= n; ++i)
+        if (n >= 3)
+            primeList.add(3);
+
+        for (int i = 4; i <= n; i+=2)
+            FactorFinder.findFactors(i, factorMap);
+
+        for (int i = 5; i <= n; i+=2)
             if (!PrimeFinder.isPrime(i, primeList))
                 FactorFinder.findFactors(i, factorMap);
 
