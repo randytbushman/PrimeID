@@ -10,7 +10,8 @@ public class PrimeFinder
 
     /**
      * This method confirms if a given int n is prime. This algorithm completes in O(sqrt(N)) time. This method assumes
-     * that n is not 2 or 3 as these are the trivial primes! This method also assumes that n is odd and greater than 1!
+     * that n is neither 2 nor 3 as these are the trivial primes. This method also assumes that n is odd and greater
+     * than 1!
      * @param n The number we are classifying.
      * @return true if n is prime and false if n is composite.
      */
