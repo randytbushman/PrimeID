@@ -36,7 +36,7 @@ public class SingleThreadedFactorizer
                 FactorFinder.findFactors(i, factorMap);
 
         System.out.println("Finished in " + (System.nanoTime() - startTime) + "ns\n\n");
-        //System.out.println(primeList);
+        System.out.println(primeList);
         //System.out.println(factorMap+"\n\n");
     }
 }

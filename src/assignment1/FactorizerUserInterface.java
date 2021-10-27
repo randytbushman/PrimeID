@@ -11,12 +11,13 @@ import java.util.Scanner;
 public class FactorizerUserInterface
 {
     public FactorizerUserInterface() {
-        Scanner sc = new Scanner(System.in);
         boolean running = true;
-        System.out.println("Welcome to Randy's Factorizer!");
         int numThreads;
         int lastSelectedFactorizeMode;
         int numToFactorize;
+        Scanner sc = new Scanner(System.in);
+
+        System.out.println("Welcome to Randy's Factorizer!");
 
         while(running) {
             System.out.println("""

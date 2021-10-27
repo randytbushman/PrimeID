@@ -19,14 +19,26 @@ public class BoundedThreadedFactorizerCallable {
         ExecutorService exec = Executors.newFixedThreadPool(threadpoolSize);
         List<Integer> primeList = Collections.synchronizedList(new ArrayList<>());
         Map<Integer, List<Integer>> factorMap = new ConcurrentHashMap<>();
+        primeList.add(2);
+
+        if (n >= 3)
+            primeList.add(3);
 
 
-        for (int i = 2; i <= n; ++i) {
+        for (int i = 4; i <= n; i+=2) {
             int finalI = i;
-            Callable<Integer> task = () -> {
+            Callable<Boolean> task = () -> {
+                FactorFinder.findFactors(finalI, factorMap); return true;
+            };
+            exec.submit(task);
+        }
+
+        for (int i = 5; i <= n; i+=2) {
+            int finalI = i;
+            Callable<Boolean> task = () -> {
                 if (!PrimeFinder.isPrime(finalI, primeList))
                     FactorFinder.findFactors(finalI, factorMap);
-                return 0;
+                return true;
             };
             exec.submit(task);
         }
@@ -38,9 +50,8 @@ public class BoundedThreadedFactorizerCallable {
             System.err.println("I am lame");
         }
 
-
         System.out.println("Finished in " + (System.nanoTime() - startTime) + "ns\n\n");
-        //System.out.println(primeList);
+        System.out.println(primeList);
         //System.out.println(factorMap+"\n\n");
     }
 

@@ -25,8 +25,23 @@ public class UnboundedTheadedFactorizer {
         List<Integer> primeList = Collections.synchronizedList(new ArrayList<>());
         Map<Integer, List<Integer>> factorMap = new ConcurrentHashMap<>();
         List<Thread> threadList = new ArrayList<>();
+        primeList.add(2);
 
-        for (int i = 2; i <= n; ++i) {
+        if (n >= 3)
+            primeList.add(3);
+
+
+        // All even number greater than 2 are composite
+        for (int i = 4; i <= n; i+=2) {
+            int finalI = i;
+            Runnable task = () -> FactorFinder.findFactors(finalI, factorMap);
+            Thread t = new Thread(task);
+            t.start();
+            threadList.add(t);
+        }
+
+        // All odd numbers greater than 3 may be prime
+        for (int i = 5; i <= n; i+=2) {
             int finalI = i;
             Runnable task = () -> {
                 if (!PrimeFinder.isPrime(finalI, primeList))
@@ -45,7 +60,7 @@ public class UnboundedTheadedFactorizer {
         }
 
         System.out.println("Finished in " + (System.nanoTime() - startTime) + "ns\n\n");
-        //System.out.println(primeList);
+        System.out.println(primeList);
         //System.out.println(factorMap+"\n\n");
     }
 }
