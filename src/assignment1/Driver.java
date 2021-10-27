@@ -1,7 +1,5 @@
 package assignment1;
 
-import static java.lang.Integer.parseInt;
-
 /**
  * The Driver class.
  * @author Randolph Bushman
