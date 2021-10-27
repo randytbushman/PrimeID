@@ -10,6 +10,6 @@ import static java.lang.Integer.parseInt;
 public class Driver
 {
     public static void main(String[] args) {
-        new FactorizerInterface();
+        new FactorizerUserInterface();
     }
 }

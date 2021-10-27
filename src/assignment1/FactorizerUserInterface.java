@@ -8,9 +8,9 @@ import java.util.Scanner;
  * @author Randolph Bushman
  * @version 10.21.2021
  */
-public class FactorizerInterface
+public class FactorizerUserInterface
 {
-    public FactorizerInterface() {
+    public FactorizerUserInterface() {
         Scanner sc = new Scanner(System.in);
         boolean running = true;
         System.out.println("Welcome to Randy's Factorizer!");
