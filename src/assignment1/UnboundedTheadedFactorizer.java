@@ -28,12 +28,9 @@ public class UnboundedTheadedFactorizer {
 
         for (int i = 2; i <= n; ++i) {
             int finalI = i;
-            Runnable task = new Runnable() {
-                @Override
-                public void run() {
-                    if (!PrimeFinder.isPrime(finalI, primeList))
-                        FactorFinder.findFactors(finalI, factorMap);
-                }
+            Runnable task = () -> {
+                if (!PrimeFinder.isPrime(finalI, primeList))
+                    FactorFinder.findFactors(finalI, factorMap);
             };
             Thread t = new Thread(task);
             t.start();

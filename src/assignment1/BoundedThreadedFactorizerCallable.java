@@ -23,13 +23,10 @@ public class BoundedThreadedFactorizerCallable {
 
         for (int i = 2; i <= n; ++i) {
             int finalI = i;
-            Callable<Integer> task = new Callable<Integer>() {
-                @Override
-                public Integer call() {
-                    if (!PrimeFinder.isPrime(finalI, primeList))
-                        FactorFinder.findFactors(finalI, factorMap);
-                    return 0;
-                }
+            Callable<Integer> task = () -> {
+                if (!PrimeFinder.isPrime(finalI, primeList))
+                    FactorFinder.findFactors(finalI, factorMap);
+                return 0;
             };
             exec.submit(task);
         }
