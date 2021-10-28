@@ -34,8 +34,8 @@ public class PrimeSieve
         }
 
 
-        System.out.println("Finished in " + (System.nanoTime() - startTime) + "ns\n\n");
-        System.out.println(primeList);
+        System.out.println("Finished in " + (System.nanoTime() - startTime) + "ns");
+        //System.out.println(primeList);
         //System.out.println(factorMap);
     }
 
@@ -47,8 +47,14 @@ public class PrimeSieve
         List<Thread> threads = new ArrayList<>();
         List<Integer> primeList = new ArrayList<>();
         Map<Integer, List<Integer>> factorMap = new ConcurrentHashMap<>();
+        primeList.add(2);
+        if (n >= 3)
+            primeList.add(3);
+        if (n >= 4)
+            factorMap.put(4, new ArrayList<>(Arrays.asList(1,2,4)));
 
-        for (int i = 2; i<=n; ++i) {
+
+        for (int i = 5; i<=n; i+=6) {
             if (!sieve[i]) {
                 primeList.add(i);
                 for (int j = 2; j * i <= n; ++j) {
@@ -60,6 +66,18 @@ public class PrimeSieve
                     sieve[i * j] = true;
                 }
             }
+            if (!sieve[i+2]) {
+                primeList.add(i+2);
+                for (int j = 2; j * (i+2) <= n; ++j) {
+                    int finalIJ = (i+2)*j;
+                    Runnable task = () -> FactorFinder.findFactors(finalIJ, factorMap);
+                    Thread t = new Thread(task);
+                    t.start();
+                    threads.add(t);
+                    sieve[(i+2) * j] = true;
+                }
+            }
+
         }
 
         try {
@@ -68,8 +86,8 @@ public class PrimeSieve
         } catch (InterruptedException e) {
             System.err.println("InterruptException while joining on main thread.");
         }
-        System.out.println("Finished in " + (System.nanoTime() - startTime) + "ns\n\n");
-        System.out.println(primeList);
+        System.out.println("Finished in " + (System.nanoTime() - startTime) + "ns");
+        //System.out.println(primeList);
         //System.out.println(factorMap);
     }
 
@@ -84,8 +102,14 @@ public class PrimeSieve
         List<Integer> primeList = new ArrayList<>();
         Map<Integer, List<Integer>> factorMap = new ConcurrentHashMap<>();
         ExecutorService exec = Executors.newFixedThreadPool(threadpoolSize);
+        primeList.add(2);
+        if (n >= 3)
+            primeList.add(3);
+        if (n >= 4)
+            factorMap.put(4, new ArrayList<>(Arrays.asList(1,2,4)));
 
-        for (int i = 2; i<=n; ++i) {
+
+        for (int i = 5; i<=n; i+=6) {
             if (!sieve[i]) {
                 primeList.add(i);
                 for (int j = 2; j * i <= n; ++j) {
@@ -93,6 +117,15 @@ public class PrimeSieve
                     Runnable task = () -> FactorFinder.findFactors(finalIJ, factorMap);
                     exec.execute(task);
                     sieve[i * j] = true;
+                }
+            }
+            if (!sieve[i+2]) {
+                primeList.add(i+2);
+                for (int j = 2; j * (i+2) <= n; ++j) {
+                    int finalIJ = (i+2)*j;
+                    Runnable task = () -> FactorFinder.findFactors(finalIJ, factorMap);
+                    exec.execute(task);
+                    sieve[(i+2) * j] = true;
                 }
             }
         }
@@ -103,8 +136,8 @@ public class PrimeSieve
         } catch (InterruptedException e) {
             System.err.println("InterruptedException while awaiting termination.");
         }
-        System.out.println("Finished in " + (System.nanoTime() - startTime) + "ns\n\n");
-        System.out.println(primeList);
+        System.out.println("Finished in " + (System.nanoTime() - startTime) + "ns");
+        //System.out.println(primeList);
         //System.out.println(factorMap);
 
     }
@@ -120,8 +153,14 @@ public class PrimeSieve
         List<Integer> primeList = new ArrayList<>();
         Map<Integer, List<Integer>> factorMap = new ConcurrentHashMap<>();
         ExecutorService exec = Executors.newFixedThreadPool(threadpoolSize);
+        primeList.add(2);
+        if (n >= 3)
+            primeList.add(3);
+        if (n >= 4)
+            factorMap.put(4, new ArrayList<>(Arrays.asList(1,2,4)));
 
-        for (int i = 2; i<=n; ++i) {
+
+        for (int i = 5; i<=n; i+=6) {
             if (!sieve[i]) {
                 primeList.add(i);
                 for (int j = 2; j * i <= n; ++j) {
@@ -134,6 +173,18 @@ public class PrimeSieve
                     sieve[i * j] = true;
                 }
             }
+            if (!sieve[i+2]) {
+                primeList.add(i+2);
+                for (int j = 2; j * (i+2) <= n; ++j) {
+                    int finalIJ = (i+2)*j;
+                    Callable<Boolean> task = () -> {
+                        FactorFinder.findFactors(finalIJ, factorMap);
+                        return true;
+                    };
+                    exec.submit(task);
+                    sieve[(i+2) * j] = true;
+                }
+            }
         }
 
         exec.shutdown();
@@ -143,7 +194,7 @@ public class PrimeSieve
             System.err.println("InterruptedException while awaiting termination.");
         }
 
-        System.out.println("Finished in " + (System.nanoTime() - startTime) + "ns\n\n");
+        System.out.println("Finished in " + (System.nanoTime() - startTime) + "ns");
         //System.out.println(primeList);
         //System.out.println(factorMap);
     }
