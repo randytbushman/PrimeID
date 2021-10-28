@@ -20,15 +20,19 @@ public class PrimeSieve
             if (!sieve[i]) {
                 primeList.add(i);
                 for(int j = 2; j*i <= n; ++j) {
-                    FactorFinder.findFactors(j*i, factorMap);
-                    sieve[i * j] = true;
+                    if(!sieve[i*j]) {
+                        FactorFinder.findFactors(j * i, factorMap);
+                        sieve[i * j] = true;
+                    }
                 }
             }
             if (!sieve[i+2]) {
                 primeList.add(i+2);
                 for(int j = 2; j*(i+2) <= n; ++j) {
-                    FactorFinder.findFactors(j*(i+2), factorMap);
-                    sieve[(i+2) * j] = true;
+                    if(!sieve[(i+2) * j]) {
+                        FactorFinder.findFactors(j * (i + 2), factorMap);
+                        sieve[(i + 2) * j] = true;
+                    }
                 }
             }
         }
@@ -36,7 +40,7 @@ public class PrimeSieve
 
         System.out.println("Finished in " + (System.nanoTime() - startTime) + "ns");
         //System.out.println(primeList);
-        //System.out.println(factorMap);
+        System.out.println(factorMap);
     }
 
 
@@ -58,23 +62,27 @@ public class PrimeSieve
             if (!sieve[i]) {
                 primeList.add(i);
                 for (int j = 2; j * i <= n; ++j) {
-                    int finalIJ = i*j;
-                    Runnable task = () -> FactorFinder.findFactors(finalIJ, factorMap);
-                    Thread t = new Thread(task);
-                    t.start();
-                    threads.add(t);
-                    sieve[i * j] = true;
+                    if(!sieve[i*j]) {
+                        int finalIJ = i * j;
+                        Runnable task = () -> FactorFinder.findFactors(finalIJ, factorMap);
+                        Thread t = new Thread(task);
+                        t.start();
+                        threads.add(t);
+                        sieve[i * j] = true;
+                    }
                 }
             }
             if (!sieve[i+2]) {
                 primeList.add(i+2);
                 for (int j = 2; j * (i+2) <= n; ++j) {
-                    int finalIJ = (i+2)*j;
-                    Runnable task = () -> FactorFinder.findFactors(finalIJ, factorMap);
-                    Thread t = new Thread(task);
-                    t.start();
-                    threads.add(t);
-                    sieve[(i+2) * j] = true;
+                    if(!sieve[(i+2) * j]) {
+                        int finalIJ = (i + 2) * j;
+                        Runnable task = () -> FactorFinder.findFactors(finalIJ, factorMap);
+                        Thread t = new Thread(task);
+                        t.start();
+                        threads.add(t);
+                        sieve[(i + 2) * j] = true;
+                    }
                 }
             }
 
@@ -113,19 +121,23 @@ public class PrimeSieve
             if (!sieve[i]) {
                 primeList.add(i);
                 for (int j = 2; j * i <= n; ++j) {
-                    int finalIJ = i * j;
-                    Runnable task = () -> FactorFinder.findFactors(finalIJ, factorMap);
-                    exec.execute(task);
-                    sieve[i * j] = true;
+                    if(!sieve[i*j]) {
+                        int finalIJ = i * j;
+                        Runnable task = () -> FactorFinder.findFactors(finalIJ, factorMap);
+                        exec.execute(task);
+                        sieve[i * j] = true;
+                    }
                 }
             }
             if (!sieve[i+2]) {
                 primeList.add(i+2);
                 for (int j = 2; j * (i+2) <= n; ++j) {
-                    int finalIJ = (i+2)*j;
-                    Runnable task = () -> FactorFinder.findFactors(finalIJ, factorMap);
-                    exec.execute(task);
-                    sieve[(i+2) * j] = true;
+                    if(!sieve[(i+2) * j]) {
+                        int finalIJ = (i + 2) * j;
+                        Runnable task = () -> FactorFinder.findFactors(finalIJ, factorMap);
+                        exec.execute(task);
+                        sieve[(i + 2) * j] = true;
+                    }
                 }
             }
         }
@@ -164,25 +176,29 @@ public class PrimeSieve
             if (!sieve[i]) {
                 primeList.add(i);
                 for (int j = 2; j * i <= n; ++j) {
-                    int finalIJ = i*j;
-                    Callable<Boolean> task = () -> {
-                        FactorFinder.findFactors(finalIJ, factorMap);
-                        return true;
-                    };
-                    exec.submit(task);
-                    sieve[i * j] = true;
+                    if(!sieve[i*j]) {
+                        int finalIJ = i * j;
+                        Callable<Boolean> task = () -> {
+                            FactorFinder.findFactors(finalIJ, factorMap);
+                            return true;
+                        };
+                        exec.submit(task);
+                        sieve[i * j] = true;
+                    }
                 }
             }
             if (!sieve[i+2]) {
                 primeList.add(i+2);
                 for (int j = 2; j * (i+2) <= n; ++j) {
-                    int finalIJ = (i+2)*j;
-                    Callable<Boolean> task = () -> {
-                        FactorFinder.findFactors(finalIJ, factorMap);
-                        return true;
-                    };
-                    exec.submit(task);
-                    sieve[(i+2) * j] = true;
+                    if(!sieve[(i+2) * j]) {
+                        int finalIJ = (i + 2) * j;
+                        Callable<Boolean> task = () -> {
+                            FactorFinder.findFactors(finalIJ, factorMap);
+                            return true;
+                        };
+                        exec.submit(task);
+                        sieve[(i + 2) * j] = true;
+                    }
                 }
             }
         }
