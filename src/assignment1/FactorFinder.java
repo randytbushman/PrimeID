@@ -20,10 +20,12 @@ public class FactorFinder
     public static List<Integer> findFactors(int n, Map<Integer, List<Integer>> factorMap) {
         List<Integer> factorlist = new ArrayList<>();
         factorlist.add(1);
-        for(int i = 2; i <= n/2; ++i)   // We iterate to n/2 because no larger int cannot divide n besides itself.
-            if(n % i == 0)
+        for (int i = 2; i*i <= n; ++i)      // We only need to iterate to sqrt(n)
+            if (n % i == 0) {
                 factorlist.add(i);
-
+                if (n/i != i)               // In case we are dealing with a square number
+                    factorlist.add(n/i);
+            }
         factorlist.add(n);
         factorMap.put(n, factorlist);
         return factorlist;
