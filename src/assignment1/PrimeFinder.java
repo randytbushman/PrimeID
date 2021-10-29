@@ -3,7 +3,10 @@ package assignment1;
 import java.util.List;
 
 /**
- *
+ * This class is responsible for classifying numbers as either prime or composite. The isPrime method references two
+ * articles that optimize the process.
+ * @author Randolph Bushman
+ * @version 10.22.2021
  */
 public class PrimeFinder
 {
@@ -19,15 +22,15 @@ public class PrimeFinder
 
         if(n % 3 == 0)
             return false;
-
+        /*
+        [1] All primes number must either be written as 6n - 1 or 6n + 1
+        [2] We need only check until we reach sqrt(n). Since sqrt functions are expensive, we instead square the
+        other side. If we cannot find a number before sqrt(n), that implies there exist no factor pairs.
+        */
         for(int i = 5; i*i <= n; i += 6)
             if (n % i == 0 || n % (i + 2) == 0)
                 return false;
 
-        // All primes greater than 3 are the form of 6k-+1
-        // We can also check -> 6k-1 <= sqrt(n)
-        // Only need to check up to sqrt(n) for primes
-        // Here, two theorems are used
         primeList.add(n);
         return true;
     }

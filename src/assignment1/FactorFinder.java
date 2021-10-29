@@ -20,6 +20,8 @@ public class FactorFinder
     public static List<Integer> findFactors(int n, Map<Integer, List<Integer>> factorMap) {
         List<Integer> factorlist = new ArrayList<>();
         factorlist.add(1);
+
+        // [2] We only need to iterate to sqrt(n) as we add factor pairs. sqrt operations are expensive so we square i
         for (int i = 2; i*i <= n; ++i)      // We only need to iterate to sqrt(n)
             if (n % i == 0) {
                 factorlist.add(i);

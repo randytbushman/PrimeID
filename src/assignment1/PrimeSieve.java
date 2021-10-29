@@ -11,7 +11,7 @@ public class PrimeSieve
         List<Integer> primeList = new ArrayList<>();
         Map<Integer, List<Integer>> factorMap = new HashMap<>();
 
-        for (int i = 2; i<=n; i++)
+        for (int i = 2; i*i<=n; i++)
             if (!sieve[i]) {
                 primeList.add(i);
                 for(int j = 2; j*i <= n; ++j) {
@@ -38,7 +38,7 @@ public class PrimeSieve
         Map<Integer, List<Integer>> factorMap = new ConcurrentHashMap<>();
 
 
-        for (int i = 2; i<=n; ++i)
+        for (int i = 2; i*i<=n; ++i)
             if (!sieve[i]) {
                 primeList.add(i);
                 for (int j = 2; j * i <= n; ++j) {
@@ -79,7 +79,7 @@ public class PrimeSieve
         ExecutorService exec = Executors.newFixedThreadPool(threadpoolSize);
 
 
-        for (int i = 2; i<=n; ++i)
+        for (int i = 2; i*i<=n; ++i)
             if (!sieve[i]) {
                 primeList.add(i);
                 for (int j = 2; j * i <= n; ++j) {
@@ -117,7 +117,7 @@ public class PrimeSieve
         ExecutorService exec = Executors.newFixedThreadPool(threadpoolSize);
 
 
-        for (int i = 2; i<=n; ++i)
+        for (int i = 2; i*i<=n; ++i)
             if (!sieve[i]) {
                 primeList.add(i);
                 for (int j = 2; j * i <= n; ++j) {
