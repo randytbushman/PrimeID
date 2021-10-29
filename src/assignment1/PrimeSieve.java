@@ -10,13 +10,8 @@ public class PrimeSieve
         boolean[] sieve = new boolean[n+1];
         List<Integer> primeList = new ArrayList<>();
         Map<Integer, List<Integer>> factorMap = new HashMap<>();
-        primeList.add(2);
-        if (n >= 3)
-            primeList.add(3);
-        if (n >= 4)
-            factorMap.put(4, new ArrayList<>(Arrays.asList(1,2,4)));
 
-        for (int i = 5; i<=n; i+=6) {
+        for (int i = 2; i<=n; i++)
             if (!sieve[i]) {
                 primeList.add(i);
                 for(int j = 2; j*i <= n; ++j) {
@@ -26,21 +21,11 @@ public class PrimeSieve
                     }
                 }
             }
-            if (!sieve[i+2]) {
-                primeList.add(i+2);
-                for(int j = 2; j*(i+2) <= n; ++j) {
-                    if(!sieve[(i+2) * j]) {
-                        FactorFinder.findFactors(j * (i + 2), factorMap);
-                        sieve[(i + 2) * j] = true;
-                    }
-                }
-            }
-        }
 
 
         System.out.println("Finished in " + (System.nanoTime() - startTime) + "ns");
         //System.out.println(primeList);
-        System.out.println(factorMap);
+        //System.out.println(factorMap);
     }
 
 
@@ -51,14 +36,9 @@ public class PrimeSieve
         List<Thread> threads = new ArrayList<>();
         List<Integer> primeList = new ArrayList<>();
         Map<Integer, List<Integer>> factorMap = new ConcurrentHashMap<>();
-        primeList.add(2);
-        if (n >= 3)
-            primeList.add(3);
-        if (n >= 4)
-            factorMap.put(4, new ArrayList<>(Arrays.asList(1,2,4)));
 
 
-        for (int i = 5; i<=n; i+=6) {
+        for (int i = 2; i<=n; ++i)
             if (!sieve[i]) {
                 primeList.add(i);
                 for (int j = 2; j * i <= n; ++j) {
@@ -72,21 +52,8 @@ public class PrimeSieve
                     }
                 }
             }
-            if (!sieve[i+2]) {
-                primeList.add(i+2);
-                for (int j = 2; j * (i+2) <= n; ++j) {
-                    if(!sieve[(i+2) * j]) {
-                        int finalIJ = (i + 2) * j;
-                        Runnable task = () -> FactorFinder.findFactors(finalIJ, factorMap);
-                        Thread t = new Thread(task);
-                        t.start();
-                        threads.add(t);
-                        sieve[(i + 2) * j] = true;
-                    }
-                }
-            }
 
-        }
+
 
         try {
             for (Thread t : threads)
@@ -110,14 +77,9 @@ public class PrimeSieve
         List<Integer> primeList = new ArrayList<>();
         Map<Integer, List<Integer>> factorMap = new ConcurrentHashMap<>();
         ExecutorService exec = Executors.newFixedThreadPool(threadpoolSize);
-        primeList.add(2);
-        if (n >= 3)
-            primeList.add(3);
-        if (n >= 4)
-            factorMap.put(4, new ArrayList<>(Arrays.asList(1,2,4)));
 
 
-        for (int i = 5; i<=n; i+=6) {
+        for (int i = 2; i<=n; ++i)
             if (!sieve[i]) {
                 primeList.add(i);
                 for (int j = 2; j * i <= n; ++j) {
@@ -128,18 +90,6 @@ public class PrimeSieve
                         sieve[i * j] = true;
                     }
                 }
-            }
-            if (!sieve[i+2]) {
-                primeList.add(i+2);
-                for (int j = 2; j * (i+2) <= n; ++j) {
-                    if(!sieve[(i+2) * j]) {
-                        int finalIJ = (i + 2) * j;
-                        Runnable task = () -> FactorFinder.findFactors(finalIJ, factorMap);
-                        exec.execute(task);
-                        sieve[(i + 2) * j] = true;
-                    }
-                }
-            }
         }
 
         exec.shutdown();
@@ -165,18 +115,13 @@ public class PrimeSieve
         List<Integer> primeList = new ArrayList<>();
         Map<Integer, List<Integer>> factorMap = new ConcurrentHashMap<>();
         ExecutorService exec = Executors.newFixedThreadPool(threadpoolSize);
-        primeList.add(2);
-        if (n >= 3)
-            primeList.add(3);
-        if (n >= 4)
-            factorMap.put(4, new ArrayList<>(Arrays.asList(1,2,4)));
 
 
-        for (int i = 5; i<=n; i+=6) {
+        for (int i = 2; i<=n; ++i)
             if (!sieve[i]) {
                 primeList.add(i);
                 for (int j = 2; j * i <= n; ++j) {
-                    if(!sieve[i*j]) {
+                    if (!sieve[i * j]) {
                         int finalIJ = i * j;
                         Callable<Boolean> task = () -> {
                             FactorFinder.findFactors(finalIJ, factorMap);
@@ -187,21 +132,6 @@ public class PrimeSieve
                     }
                 }
             }
-            if (!sieve[i+2]) {
-                primeList.add(i+2);
-                for (int j = 2; j * (i+2) <= n; ++j) {
-                    if(!sieve[(i+2) * j]) {
-                        int finalIJ = (i + 2) * j;
-                        Callable<Boolean> task = () -> {
-                            FactorFinder.findFactors(finalIJ, factorMap);
-                            return true;
-                        };
-                        exec.submit(task);
-                        sieve[(i + 2) * j] = true;
-                    }
-                }
-            }
-        }
 
         exec.shutdown();
         try {
