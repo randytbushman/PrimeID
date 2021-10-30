@@ -4,7 +4,7 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 /**
- * This class provides an interface for the user to select one of four methods of factorizing.
+ * This class provides a text-based interface for the user to select one of four methods for factorizing.
  * @author Randolph Bushman
  * @version 10.21.2021
  */

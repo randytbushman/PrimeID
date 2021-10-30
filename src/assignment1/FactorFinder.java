@@ -1,12 +1,12 @@
 package assignment1;
 import java.util.ArrayList;
 import java.util.Map;
-import java.util.HashMap;
 import java.util.List;
 
 
 /**
- * This class is responsible for calculating and storing the factors of a given number.
+ * This class is responsible for calculating and storing the factors of a given number. The findFactors method references
+ * one of the articles to optimize the process.
  * @author Randolph Bushman
  * @version 10.22.2021
  */
