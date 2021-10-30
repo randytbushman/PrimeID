@@ -1,7 +1,11 @@
 # PrimeFactorizer
 Concurrent Programming class.
 
-The PrimeFactorizer is a tool used to calculate the primes in a given interval. All prime numbers shall be stored in a list, while all composite numbers shall be stored in a map.
+The PrimeFactorizer is a tool used to calculate the primes in a given interval. All prime numbers shall be stored in a list, while all composite numbers shall be stored in a map. 
+
+The user only needs to run the main method in the Driver class. The program will help you from there.
+
+PLEASE GRADE HARSHLY SO THAT I CAN LEARN THE BEST WAY TO IMPLEMENT THIS
 
 This program comes equipped with 4 modes:
 
