@@ -19,14 +19,15 @@ public class FactorizerGUI
         JFrame frame = new JFrame();
         JPanel panel = new JPanel();
 
+        // Widget instantiation
         start = new JTextField();
         end = new JTextField();
-        threadCount = new JTextField();
         submit = new JButton("Submit");
         cancel = new JButton("Cancel");
+        threadCount = new JTextField();
         tally = new JLabel(defaultTallyLabel);
 
-
+        // Set widget states
         start.setPreferredSize(new Dimension(200, 30));
         end.setPreferredSize(new Dimension(200, 30));
         start.setToolTipText("Start must be greater than or equal to 2.");
@@ -37,9 +38,11 @@ public class FactorizerGUI
         cancel.addActionListener(e -> cancelPrimeThing());
         threadCount.setText(String.valueOf(Runtime.getRuntime().availableProcessors() + 1));
 
+        // Set border and layout settings
         panel.setBorder(BorderFactory.createEmptyBorder(100,100,100,100));
         panel.setLayout(new GridLayout(0,2));
 
+        // Add widgets to panel
         panel.add(new JLabel("Start:"));
         panel.add(start);
         panel.add(new JLabel("End:"));
@@ -50,6 +53,7 @@ public class FactorizerGUI
         panel.add(cancel);
         panel.add(tally);
 
+        // Prepare frame
         frame.add(panel, BorderLayout.CENTER);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
