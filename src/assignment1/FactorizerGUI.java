@@ -10,6 +10,7 @@ public class FactorizerGUI
     private JButton cancel;
     private JTextField start;
     private JTextField end;
+    private JTextField threadCount;
     JLabel tally;
     private String defaultTallyLabel = "Primes computed: ";
 
@@ -20,6 +21,7 @@ public class FactorizerGUI
 
         start = new JTextField();
         end = new JTextField();
+        threadCount = new JTextField();
         submit = new JButton("Submit");
         cancel = new JButton("Cancel");
         tally = new JLabel(defaultTallyLabel);
@@ -33,6 +35,7 @@ public class FactorizerGUI
         end.setText("100");
         submit.addActionListener(e -> runPrimeThing());
         cancel.addActionListener(e -> cancelPrimeThing());
+        threadCount.setText(String.valueOf(Runtime.getRuntime().availableProcessors() + 1));
 
         panel.setBorder(BorderFactory.createEmptyBorder(100,100,100,100));
         panel.setLayout(new GridLayout(0,2));
@@ -41,6 +44,8 @@ public class FactorizerGUI
         panel.add(start);
         panel.add(new JLabel("End:"));
         panel.add(end);
+        panel.add(new JLabel("Thread Count:"));
+        panel.add(threadCount);
         panel.add(submit);
         panel.add(cancel);
         panel.add(tally);
