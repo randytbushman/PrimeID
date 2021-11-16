@@ -2,14 +2,16 @@ package assignment1;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class FactorizerGUI
 {
     private int primeTally = 0;
+    private JButton submit;
+    private JButton cancel;
     private JTextField start;
     private JTextField end;
+    JLabel tally;
+    private String defaultTallyLabel = "Primes computed: ";
 
 
     public FactorizerGUI() {
@@ -18,13 +20,17 @@ public class FactorizerGUI
 
         start = new JTextField();
         end = new JTextField();
-        JButton submit = new JButton("Submit");
-        JButton cancel = new JButton("Cancel");
-        JLabel tally = new JLabel("Primes computed: ");
+        submit = new JButton("Submit");
+        cancel = new JButton("Cancel");
+        tally = new JLabel(defaultTallyLabel);
 
 
-        start.setPreferredSize(new Dimension(100, 30));
-        end.setPreferredSize(new Dimension(100, 30));
+        start.setPreferredSize(new Dimension(200, 30));
+        end.setPreferredSize(new Dimension(200, 30));
+        start.setToolTipText("Start must be greater than or equal to 2.");
+        end.setToolTipText("End must be greater than start.");
+        start.setText("2");
+        end.setText("100");
         submit.addActionListener(e -> runPrimeThing());
         cancel.addActionListener(e -> cancelPrimeThing());
 
@@ -46,8 +52,13 @@ public class FactorizerGUI
     }
 
     public void runPrimeThing() {
+        submit.setEnabled(false);
+        primeTally = 0;
         System.out.println(Integer.parseInt(start.getText()));
+        tally.setText(defaultTallyLabel + ++primeTally);
+
         System.out.println(Integer.parseInt(end.getText()));
+        submit.setEnabled(true);
     }
 
     public void cancelPrimeThing() {
