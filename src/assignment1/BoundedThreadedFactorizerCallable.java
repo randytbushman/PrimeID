@@ -76,4 +76,70 @@ public class BoundedThreadedFactorizerCallable {
         //System.out.println(primeList);
         //System.out.println(factorMap+"\n\n");
     }
+
+
+    /**
+     * Given an int, n, this method locates the prime numbers between 2 and n. The numbers that are not prime
+     * will be stored in a map whose keys represent the composite numbers and whose values represent a list of
+     * that number's factors. The time it takes to complete shall then be printed. This method is threaded and will
+     * use the number of threads specified.
+     * @param start calculate and store the prime numbers between 2 and n inclusively. n > 2
+     * @param end calculate and store the prime numbers between 2 and n inclusively. n > 2
+     * @param threadpoolSize the number of threads that threadpool uses.
+     */
+    public static void factorize(int start, int end, int threadpoolSize) {
+        System.out.println("Threadpool size: " + threadpoolSize);
+
+        long startTime = System.nanoTime();
+        ExecutorService exec = Executors.newFixedThreadPool(threadpoolSize);
+        List<Integer> primeList = Collections.synchronizedList(new ArrayList<>());
+        Map<Integer, List<Integer>> factorMap = new ConcurrentHashMap<>();
+
+        if (start == 2)
+            primeList.add(2);
+        if (start <= 3)
+            primeList.add(3);
+
+        int factorStart;
+        int primeStart;
+        if (start % 2 == 0) {
+            factorStart = start;
+            primeStart = start + 1;
+        }
+        else {
+            factorStart = start + 1;
+            primeStart = start;
+        }
+
+        // All even number greater than 2 are composite
+        for (int i = factorStart; i <= end; i+=2) {
+            int finalI = i;
+            Callable<Boolean> task = () -> {
+                FactorFinder.findFactors(finalI, factorMap); return true;
+            };
+            exec.submit(task);
+        }
+
+        // All odd numbers greater than 3 may be prime
+        for (int i = primeStart; i <= end; i+=2) {
+            int finalI = i;
+            Callable<Boolean> task = () -> {
+                if (!PrimeFinder.isPrime(finalI, primeList))
+                    FactorFinder.findFactors(finalI, factorMap);
+                return true;
+            };
+            exec.submit(task);
+        }
+
+        exec.shutdown();
+        try {
+            exec.awaitTermination(10, TimeUnit.MINUTES);
+        } catch (InterruptedException e) {
+            System.err.println("InterruptedException while awaiting termination.");
+        }
+
+        System.out.println("Finished in " + (System.nanoTime() - startTime) + "ns\n\n");
+        //System.out.println(primeList);
+        //System.out.println(factorMap+"\n\n");
+    }
 }
