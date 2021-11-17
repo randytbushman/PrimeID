@@ -2,11 +2,15 @@ package assignment2;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.IntStream;
 
 public class FactorizerGUI
 {
-    private int primeTally = 0;
+
+    private AtomicInteger primeTally;
+
+
     private JButton submit;
     private JButton cancel;
     private JTextField start;
@@ -15,10 +19,11 @@ public class FactorizerGUI
 
 
     JLabel tally;
-    private String defaultTallyLabel = "Primes computed: ";
+
 
 
     public FactorizerGUI() {
+        primeTally = new AtomicInteger();
         JFrame frame = new JFrame();
         JPanel panel = new JPanel();
 
@@ -27,7 +32,7 @@ public class FactorizerGUI
         end = new JTextField();
         submit = new JButton("Submit");
         cancel = new JButton("Cancel");
-        tally = new JLabel(defaultTallyLabel);
+        tally = new JLabel();
 
         // Set widget states
         start.setPreferredSize(new Dimension(200, 30));
@@ -62,13 +67,13 @@ public class FactorizerGUI
     public void runPrimeThing() {
 
         submit.setEnabled(false);
-
+        primeTally.set(0);
         int s = Integer.parseInt(start.getText());
         int e = Integer.parseInt(end.getText());
         worker = new SwingWorker<>() {
             @Override
             protected Void doInBackground() throws Exception {
-                IntStream.range(s, e).parallel().filter(PrimeFinder::isPrime).count();
+                IntStream.range(s, e).parallel().filter(i -> PrimeFinder.isPrime(i)).forEach(p -> updateTally());
                 return null;
             }
 
@@ -76,16 +81,20 @@ public class FactorizerGUI
             protected void done() {
                 try {
                     submit.setEnabled(true);
+                    System.out.println(primeTally);
                 } catch (Exception e) {
                 }
             }
         };
         worker.execute();
 
-        //tally.setText(defaultTallyLabel + IntStream.range(s, e).parallel().filter(PrimeFinder::isPrime).count());
-        //System.out.println("Time elapsed: " + (System.nanoTime() - start) + "ns");
-        //submit.setEnabled(true);
     }
+
+    public void updateTally() {
+        primeTally.incrementAndGet();
+        tally.setText(primeTally.toString());
+    }
+
 
     public void cancelPrimeThing() {
         worker.cancel(true);
