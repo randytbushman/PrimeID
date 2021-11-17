@@ -2,6 +2,7 @@ package assignment2;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.stream.IntStream;
 
 public class FactorizerGUI
 {
@@ -10,7 +11,9 @@ public class FactorizerGUI
     private JButton cancel;
     private JTextField start;
     private JTextField end;
-    private JTextField threadCount;
+    private SwingWorker<Void, Void> worker;
+
+
     JLabel tally;
     private String defaultTallyLabel = "Primes computed: ";
 
@@ -24,7 +27,6 @@ public class FactorizerGUI
         end = new JTextField();
         submit = new JButton("Submit");
         cancel = new JButton("Cancel");
-        threadCount = new JTextField();
         tally = new JLabel(defaultTallyLabel);
 
         // Set widget states
@@ -36,7 +38,6 @@ public class FactorizerGUI
         end.setText("100");
         submit.addActionListener(e -> runPrimeThing());
         cancel.addActionListener(e -> cancelPrimeThing());
-        threadCount.setText(String.valueOf(Runtime.getRuntime().availableProcessors() + 1));
 
         // Set border and layout settings
         panel.setBorder(BorderFactory.createEmptyBorder(100,100,100,100));
@@ -47,8 +48,6 @@ public class FactorizerGUI
         panel.add(start);
         panel.add(new JLabel("End:"));
         panel.add(end);
-        panel.add(new JLabel("Thread Count:"));
-        panel.add(threadCount);
         panel.add(submit);
         panel.add(cancel);
         panel.add(tally);
@@ -61,16 +60,35 @@ public class FactorizerGUI
     }
 
     public void runPrimeThing() {
-        submit.setEnabled(false);
-        primeTally = 0;
-        System.out.println(Integer.parseInt(start.getText()));
-        tally.setText(defaultTallyLabel + ++primeTally);
 
-        System.out.println(Integer.parseInt(end.getText()));
-        submit.setEnabled(true);
+        submit.setEnabled(false);
+
+        int s = Integer.parseInt(start.getText());
+        int e = Integer.parseInt(end.getText());
+        worker = new SwingWorker<>() {
+            @Override
+            protected Void doInBackground() throws Exception {
+                IntStream.range(s, e).parallel().filter(PrimeFinder::isPrime).count();
+                return null;
+            }
+
+            @Override
+            protected void done() {
+                try {
+                    submit.setEnabled(true);
+                } catch (Exception e) {
+                }
+            }
+        };
+        worker.execute();
+
+        //tally.setText(defaultTallyLabel + IntStream.range(s, e).parallel().filter(PrimeFinder::isPrime).count());
+        //System.out.println("Time elapsed: " + (System.nanoTime() - start) + "ns");
+        //submit.setEnabled(true);
     }
 
     public void cancelPrimeThing() {
-        System.out.println("Canceling");
+        worker.cancel(true);
+        submit.setEnabled(true);
     }
 }

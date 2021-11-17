@@ -1,5 +1,7 @@
 package assignment2;
 
+import javax.swing.*;
+
 /**
  * The Driver class.
  * @author Randolph Bushman
@@ -8,7 +10,10 @@ package assignment2;
 public class Driver
 {
     public static void main(String[] args) {
-        new FactorizerGUI();
+        SwingUtilities.invokeLater(() -> new FactorizerGUI());
+
+
+        //new FactorizerGUI();
     }
 
 }
