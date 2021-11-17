@@ -1,4 +1,4 @@
-package assignment1;
+package assignment2;
 
 /**
  * The Driver class.
@@ -8,6 +8,7 @@ package assignment1;
 public class Driver
 {
     public static void main(String[] args) {
-        new FactorizerUserInterface();
+        new FactorizerGUI();
     }
+
 }
