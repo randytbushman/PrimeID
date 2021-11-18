@@ -74,7 +74,6 @@ public class FactorizerGUI
                 IntStream.range(s, e).unordered().parallel().takeWhile(i -> !guiCancelled()).filter(PrimeFinder::isPrime).forEach(p -> incrementTally());
                 System.out.println("Time elapsed: " + (System.nanoTime() - start)/100000 + "ms");
                 submit.setEnabled(true);
-                cancelled = false;
                 return null;
             }
         };
