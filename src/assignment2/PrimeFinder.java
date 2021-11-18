@@ -2,6 +2,8 @@ package assignment2;
 
 /**
  * This class is used for classifying integers as either prime or composite.
+ * @author Randolph Bushman
+ * @version 11.18.2021
  */
 public class PrimeFinder {
 

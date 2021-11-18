@@ -10,6 +10,8 @@ import java.util.stream.IntStream;
  * This class allows for the creation of a GUI that calculates the number of primes from a given start and end value.
  * The number of primes calculated is updated in real time and displays at the bottom of the screen. While by no means
  * gorgeous, this GUI demonstrates how to properly use parallel streams with cancellation.
+ * @author Randolph Bushman
+ * @version 11.18.2021
  */
 public class FactorizerGUI
 {
