@@ -4,13 +4,16 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.IntStream;
+import java.util.stream.Stream;
+
 
 public class FactorizerGUI
 {
 
     private AtomicInteger primeTally;
 
-
+    private boolean canSubmit;
+    private boolean cancelled;
     private JButton submit;
     private JButton cancel;
     private JTextField start;
@@ -24,6 +27,8 @@ public class FactorizerGUI
 
     public FactorizerGUI() {
         primeTally = new AtomicInteger();
+        cancelled = false;
+        canSubmit = true;
         JFrame frame = new JFrame();
         JPanel panel = new JPanel();
 
@@ -67,22 +72,28 @@ public class FactorizerGUI
     public void runPrimeThing() {
 
         submit.setEnabled(false);
+        cancelled = false;
         primeTally.set(0);
         int s = Integer.parseInt(start.getText());
         int e = Integer.parseInt(end.getText());
         worker = new SwingWorker<>() {
             @Override
             protected Void doInBackground() throws Exception {
-                IntStream.range(s, e).parallel().filter(i -> PrimeFinder.isPrime(i)).forEach(p -> updateTally());
+                canSubmit = false;
+                IntStream.range(s, e).parallel().filter(PrimeFinder::isPrime).takeWhile(i -> !guiCancelled()).forEach(p -> updateTally());
+                canSubmit = true;
                 return null;
             }
 
             @Override
             protected void done() {
                 try {
+                    while(!canSubmit)
+                        continue;
                     submit.setEnabled(true);
-                    System.out.println(primeTally);
+
                 } catch (Exception e) {
+                    System.err.println("asdf");
                 }
             }
         };
@@ -90,14 +101,20 @@ public class FactorizerGUI
 
     }
 
+    public boolean guiCancelled() {
+        return cancelled;
+    }
+
     public void updateTally() {
         primeTally.incrementAndGet();
-        tally.setText(primeTally.toString());
+        tally.setText("Primes: " + primeTally.toString());
     }
 
 
     public void cancelPrimeThing() {
+        cancelled = true;
         worker.cancel(true);
         submit.setEnabled(true);
+        cancelled = false;
     }
 }
