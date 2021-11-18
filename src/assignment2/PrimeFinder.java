@@ -1,16 +1,14 @@
 package assignment2;
 
-import java.util.concurrent.atomic.AtomicInteger;
-
+/**
+ * This class is used for classifying integers as either prime or composite.
+ */
 public class PrimeFinder {
 
 
     /**
-     * This method confirms if a given int n is prime. This algorithm completes in O(sqrt(N)) time. This method assumes
-     * that n is neither 2 nor 3 as these represent the trivial primes. This method also assumes that n is odd and greater
-     * than 1!
+     * This method confirms if a given int n is prime. This algorithm completes in O(sqrt(N)) time.
      * @param n The number we are classifying.
-     * @param tally
      * @return true if n is prime and false if n is composite.
      */
     public static boolean isPrime(int n) {
