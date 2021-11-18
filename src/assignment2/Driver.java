@@ -5,15 +5,12 @@ import javax.swing.*;
 /**
  * The Driver class.
  * @author Randolph Bushman
- * @version 9.30.2021
+ * @version 11.17.2021
  */
 public class Driver
 {
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> new FactorizerGUI());
-
-
-        //new FactorizerGUI();
+        SwingUtilities.invokeLater(FactorizerGUI::new);
     }
 
 }

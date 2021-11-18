@@ -4,40 +4,27 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.IntStream;
-import java.util.stream.Stream;
 
 
+/**
+ * This class allows for the creation of a GUI that calculates the number of primes from a given start and end value.
+ * The number of primes calculated is updated in real time and displays at the bottom of the screen. While by no means
+ * gorgeous, this GUI demonstrates how to properly use parallel streams with cancellation.
+ */
 public class FactorizerGUI
 {
-
-    private AtomicInteger primeTally;
-
-    private boolean canSubmit;
-    private boolean cancelled;
-    private JButton submit;
-    private JButton cancel;
-    private JTextField start;
-    private JTextField end;
-    private SwingWorker<Void, Void> worker;
-
-
-    JLabel tally;
-
+    private AtomicInteger tallyCount = new AtomicInteger();     // Number of primes found during computation
+    private boolean cancelled = true;                           // If the GUI is canceled
+    private JButton submit = new JButton("Submit");         // Submit button for computation
+    private JButton cancel = new JButton("Cancel");         // Cancel computation
+    private JTextField start = new JTextField();                // The starting value text field
+    private JTextField end = new JTextField();                  // The ending value text field
+    private JLabel tallyLabel = new JLabel();                   // The label that displays the current prime tally
 
 
     public FactorizerGUI() {
-        primeTally = new AtomicInteger();
-        cancelled = false;
-        canSubmit = true;
         JFrame frame = new JFrame();
         JPanel panel = new JPanel();
-
-        // Widget instantiation
-        start = new JTextField();
-        end = new JTextField();
-        submit = new JButton("Submit");
-        cancel = new JButton("Cancel");
-        tally = new JLabel();
 
         // Set widget states
         start.setPreferredSize(new Dimension(200, 30));
@@ -46,8 +33,8 @@ public class FactorizerGUI
         end.setToolTipText("End must be greater than start.");
         start.setText("2");
         end.setText("100");
-        submit.addActionListener(e -> runPrimeThing());
-        cancel.addActionListener(e -> cancelPrimeThing());
+        submit.addActionListener(e -> runPrimeFinder());
+        cancel.addActionListener(e -> cancelled = true);
 
         // Set border and layout settings
         panel.setBorder(BorderFactory.createEmptyBorder(100,100,100,100));
@@ -60,61 +47,51 @@ public class FactorizerGUI
         panel.add(end);
         panel.add(submit);
         panel.add(cancel);
-        panel.add(tally);
+        panel.add(tallyLabel);
 
-        // Prepare frame
+        // Prepare frame and set visible
         frame.add(panel, BorderLayout.CENTER);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setVisible(true);
     }
 
-    public void runPrimeThing() {
-
+    /**
+     * This function computes all the primes between the specified start and end values and displays on the current
+     * number on the GUI in real time. This method uses concurrent practices and can be cancelled.
+     */
+    public void runPrimeFinder() {
         submit.setEnabled(false);
         cancelled = false;
-        primeTally.set(0);
+        tallyCount.set(0);
         int s = Integer.parseInt(start.getText());
         int e = Integer.parseInt(end.getText());
-        worker = new SwingWorker<>() {
+
+        SwingWorker<Void, Void> worker = new SwingWorker<>() {
             @Override
-            protected Void doInBackground() throws Exception {
-                canSubmit = false;
-                IntStream.range(s, e).parallel().filter(PrimeFinder::isPrime).takeWhile(i -> !guiCancelled()).forEach(p -> updateTally());
-                canSubmit = true;
+            protected Void doInBackground() {
+                IntStream.range(s, e).unordered().parallel().takeWhile(i -> !guiCancelled()).filter(PrimeFinder::isPrime).forEach(p -> incrementTally());
+                submit.setEnabled(true);
+                cancelled = false;
                 return null;
-            }
-
-            @Override
-            protected void done() {
-                try {
-                    while(!canSubmit)
-                        continue;
-                    submit.setEnabled(true);
-
-                } catch (Exception e) {
-                    System.err.println("asdf");
-                }
             }
         };
         worker.execute();
-
     }
 
+    /**
+     * This method returns the current state of the calculation, whether it was canceled.
+     * @return if the current computation is cancelled
+     */
     public boolean guiCancelled() {
         return cancelled;
     }
 
-    public void updateTally() {
-        primeTally.incrementAndGet();
-        tally.setText("Primes: " + primeTally.toString());
-    }
-
-
-    public void cancelPrimeThing() {
-        cancelled = true;
-        worker.cancel(true);
-        submit.setEnabled(true);
-        cancelled = false;
+    /**
+     * This method increments the tally and updates the label on the GUI.
+     */
+    private void incrementTally() {
+        tallyCount.incrementAndGet();
+        tallyLabel.setText("Primes: " + tallyCount.toString());
     }
 }
