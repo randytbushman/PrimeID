@@ -71,7 +71,6 @@ public class FactorizerGUI
         int e = Integer.parseInt(end.getText());
 
         if (s >= e) {
-            System.out.println("asdf");
             errorLabel.setText("End cannot be greater than or equal to start.");
             return;
         }
