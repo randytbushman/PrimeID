@@ -19,6 +19,7 @@ public class PrimeFinder {
 
         if(n % 2 == 0 || n % 3 == 0)
             return false;
+
         /*
         [1] All primes number must either be written as 6n - 1 or 6n + 1
         [2] We need only check until we reach sqrt(n). Since sqrt functions are expensive, we instead square the
@@ -27,7 +28,6 @@ public class PrimeFinder {
         for(int i = 5; i*i <= n; i += 6)
             if (n % i == 0 || n % (i + 2) == 0)
                 return false;
-
         return true;
     }
 

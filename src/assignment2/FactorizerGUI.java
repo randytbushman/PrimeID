@@ -22,6 +22,7 @@ public class FactorizerGUI
     private JTextField start = new JTextField();                // The starting value text field
     private JTextField end = new JTextField();                  // The ending value text field
     private JLabel tallyLabel = new JLabel();                   // The label that displays the current prime tally
+    private JLabel errorLabel = new JLabel();                   // Error message that appears when input is incorrect
 
 
     public FactorizerGUI() {
@@ -37,6 +38,7 @@ public class FactorizerGUI
         end.setText("100");
         submit.addActionListener(e -> runPrimeFinder());
         cancel.addActionListener(e -> cancelled = true);
+        errorLabel.setForeground(Color.RED);
 
         // Set border and layout settings
         panel.setBorder(BorderFactory.createEmptyBorder(100,100,100,100));
@@ -50,6 +52,7 @@ public class FactorizerGUI
         panel.add(submit);
         panel.add(cancel);
         panel.add(tallyLabel);
+        panel.add(errorLabel);
 
         // Prepare frame and set visible
         frame.add(panel, BorderLayout.CENTER);
@@ -63,11 +66,21 @@ public class FactorizerGUI
      * number on the GUI in real time. This method uses concurrent practices and can be cancelled.
      */
     public void runPrimeFinder() {
+
+        int s = Integer.parseInt(start.getText());
+        int e = Integer.parseInt(end.getText());
+
+        if (s >= e) {
+            System.out.println("asdf");
+            errorLabel.setText("End cannot be greater than or equal to start.");
+            return;
+        }
+
+        errorLabel.setText("");
         submit.setEnabled(false);
         cancelled = false;
         tallyCount.set(0);
-        int s = Integer.parseInt(start.getText());
-        int e = Integer.parseInt(end.getText());
+
 
         SwingWorker<Void, Void> worker = new SwingWorker<>() {
             @Override
