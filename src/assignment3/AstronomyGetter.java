@@ -10,6 +10,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 
+/**
+ * This class is responsible for downloading, processing, then saving images from the website: http://elvis.rowan.edu/~mckeep82/ccp/fa19/Astronomy/
+ *
+ * @author Randolph Bushman
+ * @version 12.14.2021
+ */
 public class AstronomyGetter
 {
     /**
@@ -20,8 +26,8 @@ public class AstronomyGetter
     public static void downloadAndProcessImages(boolean threaded) {
         List<String> filenames = getJPGFilenamesFromAstronomyWebsite();
         Stream<String> stream = filenames.stream();
-        stream = threaded ? stream.unordered().parallel() : stream;     // Make stream threaded if user speicifes
-        stream.map(fn -> new NamedBufferImage(getImageFromString(fn), fn)).map(ni -> applyGrayScale(ni)).forEach(ni -> saveImage(ni));
+        stream = threaded ? stream.unordered().parallel() : stream;     // Make stream threaded if user specifies
+        stream.map(fn -> new NamedBufferedImage(getImageFromString(fn), fn)).map(AstronomyGetter::applyGrayScale).forEach(AstronomyGetter::saveImage);
         // Creates pipeline: download file, apply grayscale, download to drive.
     }
 
@@ -66,7 +72,7 @@ public class AstronomyGetter
      * @param name the valid image filename on the website
      * @return the image object if it is valid, null otherwise
      */
-    public static BufferedImage getImageFromString(String name) {
+    private static BufferedImage getImageFromString(String name) {
         try  {
             return ImageIO.read(new URL("http://elvis.rowan.edu/~mckeep82/ccp/fa19/Astronomy/" + name));
         } catch (IOException e) {e.printStackTrace();}
@@ -79,7 +85,7 @@ public class AstronomyGetter
      * @param namedImage the namedImage object
      * @return the transformed namedImage
      */
-    public static NamedBufferImage applyGrayScale(NamedBufferImage namedImage) {
+    private static NamedBufferedImage applyGrayScale(NamedBufferedImage namedImage) {
         BufferedImage image = namedImage.getImage();
         for(int i = 0; i < image.getHeight(); i++)
             for(int j = 0; j < image.getWidth(); j++) {
@@ -96,7 +102,7 @@ public class AstronomyGetter
      * Saves the image to the DownloadedFiles directory located in the assignment3 package.
      * @param namedImage the namedImage we want to save
      */
-    private static void saveImage(NamedBufferImage namedImage) {
+    private static void saveImage(NamedBufferedImage namedImage) {
         try {
             ImageIO.write(namedImage.getImage(), "jpg", new File("./src/assignment3/DownloadedFiles/" + namedImage.getName()));
         } catch (IOException e) {
