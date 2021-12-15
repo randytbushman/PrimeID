@@ -7,12 +7,12 @@ import java.awt.image.BufferedImage;
  * where the image will be saved.
  *
  * @author Randolph Bushman
- * @Version 12.14.2021
+ * @version 12.14.2021
  */
 public class NamedBufferedImage
 {
-    private BufferedImage image;    // The image object we wrap
-    private String name;            // The name of the image
+    private final BufferedImage image;    // The image object we wrap
+    private final String name;            // The name of the image
 
     public NamedBufferedImage(BufferedImage image, String name) {
         this.image = image;
