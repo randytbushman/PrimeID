@@ -1,31 +1,36 @@
-# PrimeFactorizer
-Concurrent Programming class.
+# PrimeFactorizer: A Comprehensive Prime Calculation Tool
 
-# Assignment 1
+## Overview
 
-The PrimeFactorizer is a tool used to calculate the primes in a given interval. All prime numbers shall be stored in a list, while all composite numbers shall be stored in a map. 
+PrimeFactorizer is a tool built to compute prime numbers within a defined range. The application not only discerns prime numbers but also distinguishes composite numbers, storing them separately for ease of reference. The prime numbers are stored in a list, while the composite numbers are organized in a map.
 
-The user only needs to run the main method in the Driver class. The program will help you from there.
+## Getting Started
 
-This program comes equipped with 4 modes:
+To commence the operation of PrimeFactorizer, simply run the main method located in the 'Driver' class. The application is designed to guide users through the process from thereon.
 
-    1.) Single Threaded
-    2.) Multi Threaded (Unbounded)
-    3.) Multi Threaded (Bounded Threadpool)
-    4.) Multi Threaded (Bounded Threadpool Callable)
-    
-The computation time is returned as output each time the user selects a mode. To show correctness or to debug, the user enter the Factorizer classes and uncomment the print statements inside to show the contents of the collections.
+## Features
 
-Feel free to check out the prime sieve code as well! It is not part of the official project as it produced slower results than my previous solution. Documentation in that class is limited as it is not part of the official program.
+PrimeFactorizer is equipped with four distinct operational modes to cater to various computational needs:
 
-# Assignment 2
+    1.) Single Threaded: Operates the entire process on a single thread.
+    2.) Multi Threaded (Unbounded): Executes the process on multiple threads without any limits.
+    3.) Multi Threaded (Bounded Threadpool): Performs the process on a limited number of threads.
+    4.) Multi Threaded (Bounded Threadpool Callable): Runs the process on a limited number of threads, with the ability to return a result.
 
-Essentially the same as Assignment 1, however, no prime data structures or factor maps are created. This assignment also has a GUI which allows for cancellation during calculation. All the primes from a given range are tallied, then displayed in real time on the GUI during computation.
+Upon selection of a mode, the application promptly returns the computation time. For debugging purposes or to verify the correctness of the operation, users can navigate to the Factorizer classes and uncomment the print statements to view the contents of the collections.
 
+## Additional Content
 
-# References
-Please note that while sources with code were used to create this program, the implementation is done entirely by me and my own design and tradecraft. I used only the numerical theorems and definitions and not the code for reference.
+Included in the repository is the source code for a prime sieve. Though it isn't an official part of the PrimeFactorizer project due to slower performance results, it serves as an interesting study for those interested in prime calculation methods. Please note that the documentation for this class is minimal as it's not part of the core application.
 
-[1] 	F. Maths, "All Prime Numbers are Nearly Divisible by 6 !," 7 December 2018. [Online]. Available: https://www.youtube.com/watch?v=5CUvf675-6o&ab_channel=FlammableMaths. [Accessed 29 October 2021].
+## Enhanced Version
 
-[2] 	"Most efficient way to find factors of a number - C++ and Python Code," Rookieslab.com, 14 January 2017. [Online]. Available: https://www.rookieslab.com/posts/most-efficient-way-to-find-all-factors-of-a-number-python-cpp. [Accessed 29 October 2021].
+An enhanced version of PrimeFactorizer is available, offering a Graphical User Interface (GUI) and real-time results display. This version, while performing the same prime calculations, does not create any prime data structures or factor maps. A key feature of this enhanced version is the ability to cancel computations mid-process via the GUI. The results are tallied and displayed on the GUI in real-time during the computation process.
+
+## References
+
+This program is a product of extensive research and personal ingenuity. While various sources have been referenced for numerical theorems and definitions, the implementation is the result of independent design and craftsmanship. The referenced sources are as follows:
+
+[1] F. Maths, "All Prime Numbers are Nearly Divisible by 6 !," 7 December 2018. [Online]. Available: [Link](https://www.youtube.com/watch?v=5CUvf675-6o&ab_channel=FlammableMaths). 
+
+[2] "Most efficient way to find factors of a number - C++ and Python Code," Rookieslab.com, 14 January 2017. [Online]. Available: [Link](https://www.rookieslab.com/posts/most-efficient-way-to-find-all-factors-of-a-number-python-cpp).
