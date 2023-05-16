@@ -34,3 +34,7 @@ This program is a product of extensive research and personal ingenuity. While va
 [1] F. Maths, "All Prime Numbers are Nearly Divisible by 6 !," 7 December 2018. [Online]. Available: [Link](https://www.youtube.com/watch?v=5CUvf675-6o&ab_channel=FlammableMaths). 
 
 [2] "Most efficient way to find factors of a number - C++ and Python Code," Rookieslab.com, 14 January 2017. [Online]. Available: [Link](https://www.rookieslab.com/posts/most-efficient-way-to-find-all-factors-of-a-number-python-cpp).
+
+## Acknowledgments
+This README document was meticulously assembled with the aid of the advanced language capabilities of OpenAI's GPT-4, demonstrating the harmonious collaboration between human creativity and artificial intelligence.
+
